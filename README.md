@@ -136,9 +136,13 @@ Right click on the project and click **Show In -> System Explorer** and then fin
 
 In that path, right click and choose open in terminal then 
 
-1. List the port with ```sh efm8load -l````
-2. Identified the CHIP with ```sh efm8load -p COM11 -i```
-3. Flash the chip with ```sh efm8load -p COM11 -w .\hello_8051.hex```
+1. List the port with ``` efm8load -l```
+2. Identified the CHIP with ``` efm8load -p COM11 -i```
+3. Flash the chip with ``` efm8load -p COM11 -w .\hello_8051.hex```
 
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/image/list_port.png)
+Then to print the message we can do ``` efm8load -p COM11 -m ```
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/image/print_message.png)
 
 
