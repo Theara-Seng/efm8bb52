@@ -30,10 +30,11 @@ SiLabs_Startup (void)
   // [SiLabs Startup]$
 }
 void delay(){
-  uint32_t i;
-  for (i=1; i<=50000;i++){
+  uint32_t i = 1;
+  for ( i = 1; i<=400000; i++){
 
   }
+
 }
 //-----------------------------------------------------------------------------
 // main() Routine
@@ -43,9 +44,7 @@ main (void)
 {
   // Call hardware initialization routine
   enter_DefaultMode_from_RESET ();
-  SCON0_TI = 1;
 
-  RETARGET_PRINTF("Hello 8051\n");
   XBR2 |= XBR2_XBARE__ENABLED;
   P1MDIN |= P1MDIN_B0__DIGITAL;
   P1MDOUT |= P1MDOUT_B0__PUSH_PULL;

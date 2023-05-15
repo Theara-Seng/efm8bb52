@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   LAB1_LED                                                          05/15/2023 07:38:30 PAGE 1   
+C51 COMPILER V9.60.0.0   LAB1_LED                                                          05/15/2023 18:11:05 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LAB1_LED
@@ -45,42 +45,41 @@ line level    source
   30   1        // [SiLabs Startup]$
   31   1      }
   32          void delay(){
-  33   1        uint32_t i;
-  34   1        for (i=1; i<=50000;i++){
+  33   1        uint32_t i = 1;
+  34   1        for ( i = 1; i<=400000; i++){
   35   2      
   36   2        }
-  37   1      }
-  38          //-----------------------------------------------------------------------------
-  39          // main() Routine
-  40          // ----------------------------------------------------------------------------
-  41          int
-  42          main (void)
-  43          {
-  44   1        // Call hardware initialization routine
-  45   1        enter_DefaultMode_from_RESET ();
-  46   1        SCON0_TI = 1;
+  37   1      
+  38   1      }
+  39          //-----------------------------------------------------------------------------
+  40          // main() Routine
+  41          // ----------------------------------------------------------------------------
+  42          int
+  43          main (void)
+  44          {
+  45   1        // Call hardware initialization routine
+  46   1        enter_DefaultMode_from_RESET ();
   47   1      
-  48   1        RETARGET_PRINTF("Hello 8051\n");
-  49   1        XBR2 |= XBR2_XBARE__ENABLED;
-  50   1        P1MDIN |= P1MDIN_B0__DIGITAL;
-C51 COMPILER V9.60.0.0   LAB1_LED                                                          05/15/2023 07:38:30 PAGE 2   
+  48   1        XBR2 |= XBR2_XBARE__ENABLED;
+  49   1        P1MDIN |= P1MDIN_B0__DIGITAL;
+  50   1        P1MDOUT |= P1MDOUT_B0__PUSH_PULL;
+C51 COMPILER V9.60.0.0   LAB1_LED                                                          05/15/2023 18:11:05 PAGE 2   
 
-  51   1        P1MDOUT |= P1MDOUT_B0__PUSH_PULL;
-  52   1        while (1)
-  53   1          {
-  54   2            P1_B0 = 1;
-  55   2            delay();
-  56   2            P1_B0 = 0;
-  57   2            delay();
-  58   2      // $[Generated Run-time code]
-  59   2      // [Generated Run-time code]$
-  60   2          }
-  61   1      }
+  51   1        while (1)
+  52   1          {
+  53   2            P1_B0 = 1;
+  54   2            delay();
+  55   2            P1_B0 = 0;
+  56   2            delay();
+  57   2      // $[Generated Run-time code]
+  58   2      // [Generated Run-time code]$
+  59   2          }
+  60   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     91    ----
-   CONSTANT SIZE    =     12    ----
+   CODE SIZE        =     90    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----       4
