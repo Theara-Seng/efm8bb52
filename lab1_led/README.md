@@ -82,11 +82,10 @@ The whole program as shown below
 void
 SiLabs_Startup (void)
 {
-  disable_watchdog ()
-  {
+
     WDTCN = 0xAD;
     WDTCN = 0xDE;
-  }
+  
 
 }
 void delay(){
