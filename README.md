@@ -89,3 +89,56 @@ And change the **Target Overflow Frequency** to 230400 (115200 * 2) buadrate
 
 Then you will see the baudrate in the UART0 is  115566 with is around 115200 
 
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/image/baudrate.png)
+
+## Configure the path of efm8load 
+
+Goes to efm8load which is in the **dist** of the efm8load main and copy the path 
+
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/image/dist_part.png)
+
+Then go to advance setting in your computer 
+
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/image/advanced_setting.png)
+
+and in the system properties choose **Environment Variables**
+
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/image/environment_variable.png)
+
+Then create new path and paste the path that you copied from the dist of efm8load
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/image/path.png)
+
+## Code 
+
+First we include the **retargetserial.h**
+
+```sh
+#include "retargetserial.h"
+```
+
+Then in the main function, let  SCON0_TI = 1 and print **Hello 8051**
+
+```sh
+ SCON0_TI = 1;
+ RETARGET_PRINTF("Hello 8051\n");
+```
+
+**Then right click on the project and click build**
+
+## Program the efm8
+
+Right click on the project and click **Show In -> System Explorer** and then find the .hex file of your project.
+
+In that path, right click and choose open in terminal then 
+
+1. List the port with ```sh efm8load -l````
+2. Identified the CHIP with ```sh efm8load -p COM11 -i```
+3. Flash the chip with ```sh efm8load -p COM11 -w .\hello_8051.hex```
+
+
+
