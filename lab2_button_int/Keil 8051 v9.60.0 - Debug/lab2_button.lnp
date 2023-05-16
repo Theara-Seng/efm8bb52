@@ -1,0 +1,4 @@
+"./src/InitDevice.OBJ",
+"./src/SILABS_STARTUP.OBJ",
+"./src/lab2_button_main.OBJ"
+TO "LAB2_BUTTON.OMF.CRBUILD" REMOVEUNUSED PRINT(.\lab2_button.m51) PAGEWIDTH (120) PAGELENGTH (65) CLASSES( ECODE(C:0x0 - C:0x37fe), HCONST(C:0x0 - C:0x37fe), XDATA(X:0x0 - X:0x3ff), HDATA(X:0x0 - X:0x3ff))
