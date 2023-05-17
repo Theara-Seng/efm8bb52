@@ -29,3 +29,17 @@ So we can write
  It mean that the clock now is : $$CLKSEL = \dfrac{24.5\times 10^{6}}{32} = 765625$$
  
  ## Timer 0
+
+There are 4 mode in Timer 0 and Timer 1 such as
+
+* 8 bit auto-reload counter/timer mode
+* 13 bit counter/timer mode
+* 16 bit counter/timer mode
+* Dual 8-bit counter/timer mode (Timer 0)
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/lab3_timer0/lab3_image/timer0.png)
+
+but before we are going to discuss about the counter/timer mode we need to select the clock control which is used with the timer 0 and 1 first
+
+### CKCON
+
