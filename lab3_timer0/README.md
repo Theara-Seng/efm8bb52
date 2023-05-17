@@ -143,4 +143,123 @@ TL0 = 0xB2;
 TH0 = 0xC1;
 ```
  
+## TCON
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/lab3_timer0/lab3_image/TCON.png)
+
+TCON register is the timer control register, when we set the TCON_TR0 = 1, the timer start counting up until the overflow from 0xFFFF for 16 bit timer to 0, but when there is a overflow the TF0 is set to 1
+
+so we need to clear the TF0 also TR0 when there is a overflow, the program can be written as 
+
+```sh
+  TCON_TR0 = 1;
+  while (TCON_TF0 == 0);
+  TCON_TR0 = 0;
+  TCON_TF0 = 0;
+```
+
+##  Program
+
+The whole program can be found in the script below 
+
+```sh
+#include <SI_EFM8BB52_Register_Enums.h>                  // SFR declarations
+#include "InitDevice.h"
+// $[Generated Includes]
+// [Generated Includes]$
+sbit led = P1^3;
+uint8_t low_bit;
+uint8_t high_bit;
+--------------------
+void
+SiLabs_Startup (void)
+{
+  // $[SiLabs Startup]
+  // [SiLabs Startup]$
+}
+void
+disable_watchdog ()
+{
+  WDTCN = 0xDE;
+  WDTCN = 0xAD;
+}
+void
+enable_crossbar ()
+{
+  XBR2 |= XBR2_XBARE__ENABLED;
+  P1MDIN |= P1MDIN_B3__DIGITAL;
+  P1MDOUT |= P1MDOUT_B3__PUSH_PULL;
+}
+
+
+
+// Timer 0 Mode 0 (13 Bit counter/Timer)
+
+void
+timer0_mode0(){
+  // Generate a 10 millis second
+  CKCON0 = CKCON0_T0M__PRESCALE | CKCON0_SCA__SYSCLK_DIV_48;  // clock control = 765625/48= 15950
+ 
+  TMOD = TMOD_CT0__TIMER | TMOD_T0M__MODE0 ; // select mode 0 (13 bit timer)
+
+  // time_delay = (Fckcon/(2^13 - TH0:TL0) => TH0:TL0 = 8192 - (Fckcon/time_delay) = 8192- (15950/100)= 8032= 1F60
+
+  // since the data is 13 bit we need to shift left by 3 -> 1F60<<3 =FB00 , TH0 = 0xFB and TL0 = 00>>3;
+  TL0 = 0x00>>3;
+  TH0 = 0xFB;
+  TCON_TR0 = 1; // start the timer
+  while (TCON_TF0 == 0);
+  TCON_TR0 = 0;
+  TCON_TF0 = 0;
+}
+
+// Timer 0 Mode 1 (16 bit counter/Timer)
+void
+timer0_mode1 ()
+{
+  // Generate a 1 second delay.
+  CKCON0 = CKCON0_T0M__PRESCALE | CKCON0_SCA__SYSCLK_DIV_48; //clock control = 765625/48 = 15,950
+  TMOD = TMOD_CT0__TIMER | TMOD_T0M__MODE1;  // Mode 1 timer 0 (16 Bit)
+
+  // time = (Fckcon/(65536-TH0:TL0))=> TH0:TL0 = 65536-Fckcon = 65536 - 15950= 49586 -> TH0=0xC1 and TL0=0xB2
+
+  TL0 = 0xB2;
+  TH0 = 0xC1;
+  TCON_TR0 = 1;
+  while (TCON_TF0 == 0);
+  TCON_TR0 = 0;
+  TCON_TF0 = 0;
+
+}
+//-----------------------------------------------------------------------------
+// main() Routine
+// ----------------------------------------------------------------------------
+int
+main (void)
+{
+  // Call hardware initialization routine
+  enter_DefaultMode_from_RESET ();
+  disable_watchdog();
+  enable_crossbar ();
+
+  CLKSEL = CLKSEL_CLKSL__HFOSC0_clk24p5 | CLKSEL_CLKDIV__SYSCLK_DIV_32 ; // clksel = 24.5MHz/32 =765625
+
+  while (1)
+    {
+      led = 1;
+      timer0_mode0 ();
+      led = 0;
+      timer0_mode1 ();
+// $[Generated Run-time code]
+// [Generated Run-time code]$
+    }
+}
+```
+
+So we write a code that turn on the led of 10ms and turn off the led for 1 second.
+
+# Result
+
+
+![efm8bb52](https://github.com/Theara-Seng/efm8bb52/blob/main/lab3_timer0/lab3_image/result.png)
 
